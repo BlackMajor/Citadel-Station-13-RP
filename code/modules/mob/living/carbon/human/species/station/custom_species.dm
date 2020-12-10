@@ -7,6 +7,7 @@
 	var/trashcan = FALSE //It's always sunny in the wrestling ring.
 	var/base_species = null // Unused outside of a few species
 	var/selects_bodytype = FALSE // Allows the species to choose from body types intead of being forced to be just one.
+	var/list/traits = list()
 
 /datum/species/custom
 	name = SPECIES_CUSTOM
@@ -34,8 +35,6 @@
 	spawn_flags = SPECIES_CAN_JOIN
 	appearance_flags = HAS_HAIR_COLOR | HAS_SKIN_COLOR | HAS_LIPS | HAS_UNDERWEAR | HAS_EYE_COLOR
 
-	var/list/traits = list()
-
 	has_limbs = list(
 		BP_TORSO =  list("path" = /obj/item/organ/external/chest, "descriptor" = "torso"),
 		BP_GROIN =  list("path" = /obj/item/organ/external/groin, "descriptor" = "groin"),
@@ -57,7 +56,7 @@
 	var/datum/species/real = GLOB.all_species[base_species]
 	return real.race_key
 
-/datum/species/custom/proc/produceCopy(var/datum/species/to_copy,var/list/traits,var/mob/living/carbon/human/H)
+/datum/species/proc/produceCopy(var/datum/species/to_copy,var/list/traits,var/mob/living/carbon/human/H)
 	ASSERT(to_copy)
 	ASSERT(istype(H))
 
@@ -66,7 +65,7 @@
 	if(istext(to_copy))
 		to_copy = GLOB.all_species[to_copy]
 
-	var/datum/species/custom/new_copy = new()
+	var/datum/species/new_copy = new(to_copy.type)
 
 	//Initials so it works with a simple path passed, or an instance
 	new_copy.base_species = to_copy.name
@@ -95,6 +94,7 @@
 
 	//Set up a mob
 	H.species = new_copy
+	H.icon_state = lowertext(new_copy.get_bodytype())
 
 	if(new_copy.holder_type)
 		H.holder_type = new_copy.holder_type

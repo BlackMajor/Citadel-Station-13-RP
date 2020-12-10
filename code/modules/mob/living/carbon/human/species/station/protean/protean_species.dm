@@ -130,6 +130,8 @@ A best case sev 1 emp will do 11 pre-mitigation damage. This is 17.6 damage.
 
 	var/monochromatic = FALSE //IGNORE ME
 
+	selects_bodytype = TRUE
+
 /datum/species/protean/New()
 	..()
 	if(!LAZYLEN(abilities))

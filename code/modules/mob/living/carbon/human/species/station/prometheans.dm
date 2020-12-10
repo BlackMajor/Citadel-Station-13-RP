@@ -136,6 +136,8 @@ var/datum/species/shapeshifter/promethean/prometheans
 
 	wikilink="https://wiki.vore-station.net/Promethean"
 
+	selects_bodytype = TRUE
+
 /datum/species/shapeshifter/promethean/New()
 	..()
 	prometheans = src
